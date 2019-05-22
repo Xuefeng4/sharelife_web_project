@@ -34,7 +34,7 @@ Search for places at a given destination is a crucial function for our website. 
 
 
 
-#### Advanced function A: Chat System
+### Advanced function A: Chat System
 To facilitate successful exchanges, our website provides two places where users can communicate.
 1) under each post, we provide our users a platform to ask availability, query details and post feedbacks, making the transactions more flexible.
 2) We provide a chat system for private conversations. The chat system is considered as advanced for its usefulness and technique challenges it involve.
