@@ -1,0 +1,134 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Home</title>
+
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Poppins:400,600" rel="stylesheet">
+
+
+    <!-- favicon and touch icons -->
+    <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{% static 'plugins/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/slick/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/slick-nav/slicknav.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/wow/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/theme.css' %}">
+
+</head>
+<body class="">
+<div id="page-loader">
+    <div class="loaders">
+        <img src="{% static 'assets/images/loader/3.gif' %}" alt="First Loader">
+        <img src="{% static 'assets/images/loader/4.gif' %}" alt="First Loader">
+    </div>
+</div>
+<header id="site-header">
+    <div id="site-header-top">
+        <div class="container">
+            <div class="row">
+                {% if user.is_authenticated %}
+                <div class="col-md-4">
+                    <span><p class=".text-white bg-dark .right">  Welcome Back! {{user.username}} !</p>
+                    </span>
+                </div>
+                <div class="col-md-8">
+                        <a class="btn btn-warning btn-lg header-btn hidden-sm" href="{% url 'logout'%}?next={{request.path}}" >Logout</a>
+                </div>
+                {% else %}
+                <div class="col-md-12">
+                        <a href="{% url 'login'%}?next={{request.path}}" class="btn btn-warning btn-lg header-btn hidden-sm">Login</a>
+                </div>
+                {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <figure id="site-logo">
+                    <a href="/index"><img src="{% static 'assets/images/newlogo.png' %}" alt="Logo"></a>
+                </figure>
+            </div>
+            <div class="col-md-6 col-sm-8">
+                <nav id="site-nav" class="nav navbar-default">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/index">Home</a></li>
+                        <li><a href="popular.html">Popular</a></li>
+                        <li><a href="single-property.html">Yours</a></li>
+                        <li><a href="gallery.html">Discover</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+
+
+{% block content %}
+{% endblock %}
+{% block script %}
+{% endblock %}
+
+<footer id="footer">
+    <div class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <section class="widget about-widget clearfix">
+                        <h4 class="title hide">About Us</h4>
+                        <ul class="social-icons clearfix">
+                            <li><a href="https://twitter.com/"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="https://www.pinterest.com/"><i class="fa fa-pinterest"></i></a></li>
+                            <li><a href="https://www.youtube.com/"><i class="fa fa-youtube-play"></i></a></li>
+                        </ul>
+                    </section>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <section class="widget address-widget clearfix">
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<a href="#top" id="scroll-top"><i class="fa fa-angle-up"></i></a>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+
+<link rel="stylesheet" href="{% static 'plugins/font-awesome/css/font-awesome.min.css' %}">
+
+<script src="{% static 'assets/js/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/jquery.migrate.js' %}"></script>
+<script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/slick-nav/jquery.slicknav.min.js' %}"></script>
+<script src="{% static 'plugins/slick/slick.min.js' %}"></script>
+<script src="{% static 'plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<script src="{% static 'plugins/tweetie/tweetie.js' %}"></script>
+<script src="{% static 'plugins/forms/jquery.form.min.js' %}"></script>
+<script src="{% static 'plugins/forms/jquery.validate.min.js' %}"></script>
+<script src="{% static 'plugins/modernizr/modernizr.custom.js' %}"></script>
+<script src="{% static 'plugins/wow/wow.min.js' %}"></script>
+<script src="{% static 'plugins/zoom/zoom.js' %}"></script>
+<script src="{% static 'plugins/mixitup/mixitup.min.js' %}"></script>
+<!---<script src="http://ditu.google.cn/maps/api/js?key=AIzaSyD2MtZynhsvwI2B40juK6SifR_OSyj4aBA&libraries=places"></script>--->
+<script src="{% static 'plugins/whats-nearby/source/WhatsNearby.js' %}"></script>
+<script src="{% static 'assets/js/theme.js' %}"></script>
+</body>
+</html>

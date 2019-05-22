@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<body class="">
+ <div id="property-single">
+        <div id="main-slider" style = "height:400px;width:1200px; margin-left: 100px;margin-right: 100px;">
+            <div class="row ">
+                <div class="slide col-lg-6 "><img style = "height:400px;width:700px;" src={{post.pic_url}}></div>
+                <div class="slide col-lg-6 "><img style = "height:400px;width:700px;" src="https://media-cdn.tripadvisor.com/media/photo-s/11/f8/77/bb/lincoln-park-oasis.jpg"></div>
+            </div>
+            <div class="row ">
+                <div class="slide col-lg-6" ><img style = "height:400px;width:700px;" src="https://media-cdn.tripadvisor.com/media/photo-s/11/f8/a0/b9/lincoln-park-oasis.jpg" alt="Slide"></div>
+                <div class="slide col-lg-6"><img style = "height:400px;width:700px;" src="https://media.timeout.com/images/100897003/image.jpg" alt="Slide"></div>
+            </div>
+        </div>
+
+ <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-7">
+                    <section class="property-meta-wrapper common">
+                        <h3 class="entry-title">{{ post.name }}</h3>
+                        <div class="property-single-meta">
+                            <ul class="clearfix">
+                                <li><span>City :</span> {{ post.location }}</li>
+                                {% if post.sqft > 0 %}
+                                <li><span>Property Size :</span> {{post.sqft}} </li>
+                                {% endif %}
+                                <li><span>Bedrooms :</span> {{ post.bedrooms }}</li>
+                                <li><span>Bathrooms :</span> {{ post.bathrooms }}</li>
+                                <li><span>Start Date :</span> {{ post.startDate }}</li>
+                                <li><span>End Date :</span> {{ post.endDate }}</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section class="property-contents common">
+                        <div class="entry-title clearfix">
+                            <h4 class="pull-left">Description </h4><a class="pull-right print-btn" href="javascript:window.print()">Print This Property <i class="fa fa-print"></i></a>
+                        </div>
+                        <p><li>{{ post.body }}</li></p>
+                        <p><li>{{ post.space_text }}</li></p>
+                        <!--<p><li>{{post.amentity_text  }}</li></p>-->
+                        <p><li>{{ post.interaction_text }}</li></p>
+                    </section>
+
+                    <section class="property-single-features common clearfix">
+                        <h4 class="entry-title">Property Features</h4>
+                        <ul class="property-single-features-list clearfix">
+                            {% for amen in amen_list %}
+                            <li>{{amen}}</li>
+                            {%empty%}
+                            {%endfor%}
+                        </ul>
+                    </section>
+                </div>
+
+                <div class="col-lg-4 col-md-5">
+                    <div class="float-right">
+                    {% if user.pk == post.author.pk and message_list%}
+
+                            <div class="list-group col-lg-12">
+{#                            <div class="float-right">#}
+                <div class="list-group-item">
+        {% for chat in message_list %}
+        <h4 class="list-group-item-heading">{{chat.sender}}:{{chat.content}}</h4>
+        <p class="list-group-item-text">{{chat.time}}</p>
+
+       <a href="/message/post/{{post.pk}}/{{user.pk}}/{{chat.sender.pk}}">   <button class="btn btn-default btn-sm text-center pull-right">reply</button></a>
+        <input type="hidden" class="chat_id" value="{{chat.id}}"/>
+        <br>
+        {% endfor %}
+    </div>
+
+                        </div>
+    {% else %}
+{% endif %}
+
+    {% if user.is_authenticated %}
+<form action="{% url 'message:post_message' post.pk %}" method="post" class="agent-contact-form">
+  {% csrf_token %}
+    <div class="col-lg-12">
+    <div class=" ">
+        <!--<label >Message：</label>-->
+        {{ message_form.content }}
+        {{ message_form.content.errors }}
+        <br>
+        <button type="submit" class="btn btn-default btn-lg btn-3d">submit</button>
+        {% if user.pk != post.author.pk%}
+
+          <a href="/message/post/{{post.pk}}/{{user.pk}}/{{post.author.pk}}"><button style="margin-top:10px;width:340px" class="btn btn-default btn-lg btn-3d">chat with {{post.author}}</button></a>
+        {%endif%}
+    </div>    <!-- row -->
+    </div>
+    </div>
+
+   <!-- row -->
+</form>
+{% else %}
+{% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+         <!--<div class="container">-->
+            <!--<div class="row">-->
+                <!--<div class="col-lg-8 col-md-7">-->
+                    <!--<section class="property-meta-wrapper common">-->
+                        <!--<h3 class="entry-title">{{ post.name }}</h3>-->
+                        <!--<div class="property-single-meta">-->
+                            <!--<ul class="clearfix">-->
+                                <!--<li><span>City :</span> {{ post.location }}</li>-->
+                                <!--{% if post.sqft > 0 %}-->
+                                <!--<li><span>Property Size :</span> {{post.sqft}} </li>-->
+                                <!--{% endif %}-->
+                                <!--<li><span>Bedrooms :</span> {{ post.bedrooms }}</li>-->
+                                <!--<li><span>Bathrooms :</span> {{ post.bathrooms }}</li>-->
+                                <!--<li><span>Start Date :</span> {{ post.startDate }}</li>-->
+                                <!--<li><span>End Date :</span> {{ post.endDate }}</li>-->
+                            <!--</ul>-->
+                        <!--</div>-->
+                    <!--</section>-->
+
+                    <!--<section class="property-contents common">-->
+                        <!--<div class="entry-title clearfix">-->
+                            <!--<h4 class="pull-left">Description </h4><a class="pull-right print-btn" href="javascript:window.print()">Print This Property <i class="fa fa-print"></i></a>-->
+                        <!--</div>-->
+                        <!--<p><li>{{ post.body }}</li></p>-->
+                        <!--<p><li>{{ post.space_text }}</li></p>-->
+                        <!--&lt;!&ndash;<p><li>{{post.amentity_text  }}</li></p>&ndash;&gt;-->
+                        <!--<p><li>{{ post.interaction_text }}</li></p>-->
+                    <!--</section>-->
+
+                    <!--<section class="property-single-features common clearfix">-->
+                        <!--<h4 class="entry-title">Property Features</h4>-->
+                        <!--<ul class="property-single-features-list clearfix">-->
+                            <!--{% for amen in amen_list %}-->
+                            <!--<li>{{amen}}</li>-->
+                            <!--{%empty%}-->
+                            <!--{%endfor%}-->
+                            <!--&lt;!&ndash;<li>Cable TV</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Cot</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li class="disabled">Fan</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Lift</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Parking</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Separate Shower</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Office/den</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li class="disabled">Air Conditioning</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Cable TV</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Cot</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Fan</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Lift</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li class="disabled">Parking</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Cot</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Fan</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Lift</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Parking</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Separate Shower</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li class="disabled">Office/den</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Air Conditioning</li>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<li>Cable TV</li>&ndash;&gt;-->
+                        <!--</ul>-->
+                    <!--</section>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+
+
+    <!--{% if user.pk == post.author.pk%}-->
+<!--<div class="list-group col-md-10 col-md-offset-1 well">-->
+    <!--<div class="list-group-item">-->
+        <!--{% for chat in message_list %}-->
+        <!--<h4 class="list-group-item-heading">{{chat.sender}}:{{chat.content}}</h4>-->
+        <!--<p class="list-group-item-text">{{chat.time}}</p>-->
+        <!--<input type="hidden" class="chat_id" value="{{chat.id}}"/>-->
+       <!--<a href="/message/post/{{post.pk}}/{{user.pk}}/{{chat.sender.pk}}">   <button class="btn btn-default btn-sm text-center pull-right">reply</button></a>-->
+        <!--<br>-->
+        <!--{% endfor %}-->
+    <!--</div>-->
+<!--</div>-->
+    <!--{% else %}-->
+<!--{% endif %}-->
+
+    <!--{% if user.is_authenticated %}-->
+
+<!--<div class = 'container'>-->
+    <!--<div class = ''>-->
+        <!--<label aria-label="true">Message</label>-->
+    <!--</div>-->
+
+<!--<form action="{% url 'message:post_message' post.pk %}" method="post" class="comment-form">-->
+  <!--{% csrf_token %}-->
+  <!--<div class="list-group" col-md-10>-->
+
+    <!--<div class=" ">-->
+        <!--&lt;!&ndash;<label >Message：</label>&ndash;&gt;-->
+        <!--{{ message_form.content }}-->
+        <!--{{ message_form.content.errors }}-->
+        <!--<button type="submit" class="comment-btn">submit</button>-->
+    <!--</div>-->
+              <!--<a href="/message/post/{{post.pk}}/{{user.pk}}/{{post.author.pk}}"> <button class="btn btn-default btn-sm text-center pull-right">chat</button></a>-->
+  <!--</div>    &lt;!&ndash; row &ndash;&gt;-->
+<!--</form>-->
+<!--</div>-->
+<!--{% else %}-->
+<!--{% endif %}-->
+<!--<h3>  </h3>-->
+
+
+{% endblock %}

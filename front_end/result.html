@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+
+{% block content %}
+
+<section id="home-property-for-rent-listin1">
+    <header class="section-header home-section-header text-center">
+        <div class="container">
+            <h2 > {{ num4 }} Best Places To Explore Best</h2>
+            <h3 > {{ num3 }} Choices Almost Meet Your Requirement</h3>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div id="property-for-rent-slider1">
+                {% for con, post in post_list4 %}
+                                <div class="col-lg-4 col-md-6 - {{ post.pk }}">
+                    <article class="property">
+                        <figure class="feature-image" >
+                            <a  href="post/{{post.pk}}.html"> <img style="height:250px;" src = {{post.pic_url}} alt="Property Image"></a>
+                        </figure>
+                        <div class="property-contents">
+                            <header class="property-header clearfix">
+                                <div class="pull-left" >
+                                    <h6 class="entry-title" style="height:20px;"><a href="single-property.html">{{ post.name }}</a>
+                                    </h6>
+                                    <span class="property-location"><i class="fa fa-map-marker"></i> {{post.location}}</span>
+                                </div>
+                                <button class="btn btn-default btn-price pull-right btn-3d" >
+                                    <strong>{{post.author}}</strong></button>
+                            </header>
+                            <div class="property-meta clearfix">
+                        {% if post.sqft > 0%}
+                                <span><i class="fa fa-arrows-alt"></i>  SqFt</span>
+                                {%endif%}
+                                <span><i class="fa fa-bed"></i>d {{post.bedrooms}} Beds</span>
+                                <span><i class="fa fa-bathtub"></i> {{post.bathrooms}} Baths</span>
+ <span>This place satisfied {{con}} conditions</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+
+                <!--<div class="col-lg-4 col-md-4 - {{ post.pk }}">-->
+                    <!--<article class="property clearfix">-->
+                        <!--<figure class="feature-image">-->
+                            <!--<a class="clearfix" href="single-property.html"> <img src={{post.pic_url}}-->
+                                                                                  <!--alt="Property Image"></a>-->
+                        <!--</figure>-->
+                        <!--<div class="property-contents">-->
+                            <!--<header class="property-header clearfix">-->
+                                <!--<div class="pull-left">-->
+                                    <!--<h6 class="entry-title"><a href="single-property.html">{{ post.name }}</a>-->
+                                    <!--</h6>-->
+                                    <!--<span class="property-location"><i class="fa fa-map-marker"></i> {{post.location}}</span>-->
+                                <!--</div>-->
+                                <!--<button class="btn btn-default btn-price pull-right btn-3d" >-->
+                                    <!--<strong>{{post.author}}</strong></button>-->
+                            <!--</header>-->
+                            <!--<div class="property-meta clearfix">-->
+                                <!--{% if post.sqft > 0%}-->
+                                <!--<span><i class="fa fa-arrows-alt"></i>  SqFt</span>-->
+                                <!--{%endif%}-->
+                                <!--<span><i class="fa fa-bed"></i>d {{post.bedrooms}} Beds</span>-->
+                                <!--<span><i class="fa fa-bathtub"></i> {{post.bathrooms}} Baths</span>-->
+                                <!--<span><i class="fa fa-cab"></i> Yes</span>-->
+                                <!--<span>This place satisfied {{con}} conditions</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</article>-->
+                <!--</div>-->
+                {% empty %}
+                <h3>no post yet！</h3>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+
+	<ul class="pagination pagination center">
+                {% if post_list.has_previous %}
+							<li class="disabled"><a href="?page={{ post_list.previous_page_number }}{{condition}}"><i class="fa fa-angle-left">«</i></a></li>
+                {% endif %}
+                    <!--<li><a href="?page=2{{condition}}">2</a></li>-->
+                    <li class="active"><a href="?page=3{{condition}}">{{ post_list.number }}</a></li>
+                    <!--<li><a href="?page=4{{condition}}">4</a></li>-->
+                    <!--<li><a href="?page=5{{condition}}">5</a></li>-->
+        {% if post_list.has_next %}
+							<li><a href="?page={{ post_list.next_page_number }}{{condition}}"><i class="fa fa-angle-right">»</i></a></li>
+        {% endif %}
+    </ul>
+</div>
+
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Marker Clustering</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="map"></div>
+    <script>
+
+      function initMap() {
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center:
+          {% with post_list|first as first_post %}
+          {lat:﻿{{first_post.latitude}}, lng:﻿{{first_post.longitude}}}
+          {% endwith %}
+        });
+
+        // Create an array of alphabetical characters used to label the markers.
+        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+        // Add some markers to the map.
+        // Note: The code uses the JavaScript Array.prototype.map() method to
+        // create an array of markers based on a given "locations" array.
+        // The map() method here has nothing to do with the Google Maps API.
+
+
+var iconBase = "{% static  'assets/images/marker/' %}"
+
+        var icons = {
+          4: {
+            icon: iconBase + 'star1.png'
+          },
+          3: {
+            icon: iconBase + 'star2.png'
+          },
+          2: {
+            icon: iconBase + 'star3.png'
+          }
+        };
+
+        // Add a marker clusterer to manage the markers.
+
+        var features = [
+          {% for con, post in post_list4 %}
+          {
+            position: new google.maps.LatLng({{post.latitude}}, {{post.longitude}}),
+            type: {{con}}
+          }
+          ,
+          {% endfor %}
+
+           <!--{% for post in post_list3 %}-->
+          <!--{-->
+            <!--position: new google.maps.LatLng({{post.latitude}}, {{post.longitude}}),-->
+            <!--type: 'parking'-->
+          <!--}-->
+          <!--,-->
+          <!--{% endfor %}-->
+
+          <!--{% for post in post_list2 %}-->
+          <!--{-->
+            <!--position: new google.maps.LatLng({{post.latitude}}, {{post.longitude}}),-->
+            <!--type: 'library'-->
+          <!--},-->
+          <!--{% endfor %}-->
+         ]
+
+         for (var i = 0; i < features.length; i++) {
+          var marker = new google.maps.Marker({
+            position: features[i].position,
+            icon: icons[features[i].type].icon,
+            map: map
+          });
+        };
+
+
+        for (var i = 0; i < features.length; i++) {
+          var marker = new google.maps.Marker({
+            position: features[i].position,
+            icon: icons[features[i].type].icon,
+            map: map
+          });
+        };
+
+        var markerCluster = new MarkerClusterer(map, markers,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+      }
+
+      <!--var locations = [-->
+
+        <!--{% for post in post_list4 %}-->
+            <!--{lat:{{post.latitude}}, lng:{{post.longitude}}},-->
+            <!--]-->
+        {% empty %}
+        {% endfor %}
+        <!--{lat: -31.563910, lng: 147.154312},-->
+        <!--{lat: -33.718234, lng: 150.363181},-->
+        <!--{lat: -33.727111, lng: 150.371124},-->
+        <!--{lat: -33.848588, lng: 151.209834},-->
+        <!--{lat: -33.851702, lng: 151.216968},-->
+        <!--{lat: -34.671264, lng: 150.863657},-->
+        <!--{lat: -35.304724, lng: 148.662905},-->
+        <!--{lat: -36.817685, lng: 175.699196},-->
+        <!--{lat: -36.828611, lng: 175.790222},-->
+        <!--{lat: -37.750000, lng: 145.116667},-->
+        <!--{lat: -37.759859, lng: 145.128708},-->
+        <!--{lat: -37.765015, lng: 145.133858},-->
+        <!--{lat: -37.770104, lng: 145.143299},-->
+        <!--{lat: -37.773700, lng: 145.145187},-->
+        <!--{lat: -37.774785, lng: 145.137978},-->
+        <!--{lat: -37.819616, lng: 144.968119},-->
+        <!--{lat: -38.330766, lng: 144.695692},-->
+        <!--{lat: -39.927193, lng: 175.053218},-->
+        <!--{lat: -41.330162, lng: 174.865694},-->
+        <!--{lat: -42.734358, lng: 147.439506},-->
+        <!--{lat: -42.734358, lng: 147.501315},-->
+        <!--{lat: -42.735258, lng: 147.438000},-->
+        <!--{lat: -43.999792, lng: 170.463352}-->
+
+    </script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap">
+    </script>
+  </body>
+</html>
+
+{% endblock %}

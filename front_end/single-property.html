@@ -1,0 +1,71 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+{% load staticfiles %}
+
+<body class="">
+    <div id="property-single">
+        <div id="main-slider">
+            <div class="slide"><img src="{% static 'assets/images/slider/1.jpg' %}" alt="Slide"></div>
+            <div class="slide"><img src="{% static 'assets/images/slider/2.jpg' %}" alt="Slide"></div>
+            <div class="slide"><img src="{% static 'assets/images/slider/3.jpg' %}" alt="Slide"></div>
+            <div class="slide"><img src="{% static 'assets/images/slider/4.jpg' %}" alt="Slide"></div>
+        </div>
+
+         <div class="container">
+            <div class="row">
+{#                {% for post_detail_list in post_detail_list %}#}
+                <div class="col-lg-8 col-md-7">
+                    <section class="property-meta-wrapper common">
+                        <h3 class="entry-title">{{ post_detail.name }}</h3>
+                        <div class="property-single-meta">
+                            <ul class="clearfix">
+                                <li><span>Property ID :</span> {{ post_detail.property_id }}</li>
+                                <li><span>City :</span> {{ post_detail.location }}</li>
+                                <li><span>Bedrooms :</span> {{ post_detail.bedrooms }}</li>
+                                <li><span>Bathrooms :</span> {{ post_detail.bathrooms }}</li>
+                                <li><span>Price :</span> {{ post_detail.price }}</li>
+                                <li><span>Address :</span> {{ post_detail.address }}</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <section class="property-contents common">
+                        <div class="entry-title clearfix">
+                            <h4 class="pull-left">Description </h4><a class="pull-right print-btn" href="javascript:window.print()">Print This Property <i class="fa fa-print"></i></a>
+                        </div>
+                        <p><li>{{ post_detail.description }}</li></p>
+                    </section>
+
+                    <section class="property-single-features common clearfix">
+                        <h4 class="entry-title">Property Features</h4>
+                        <ul class="property-single-features-list clearfix">
+                            <li>Air Conditioning</li>
+                            <li>Cable TV</li>
+                            <li>Cot</li>
+                            <li class="disabled">Fan</li>
+                            <li>Lift</li>
+                            <li>Parking</li>
+                            <li>Separate Shower</li>
+                            <li>Office/den</li>
+                            <li class="disabled">Air Conditioning</li>
+                            <li>Cable TV</li>
+                            <li>Cot</li>
+                            <li>Fan</li>
+                            <li>Lift</li>
+                            <li class="disabled">Parking</li>
+                            <li>Cot</li>
+                            <li>Fan</li>
+                            <li>Lift</li>
+                            <li>Parking</li>
+                            <li>Separate Shower</li>
+                            <li class="disabled">Office/den</li>
+                            <li>Air Conditioning</li>
+                            <li>Cable TV</li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

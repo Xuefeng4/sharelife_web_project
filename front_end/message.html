@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<!--聊天框-->
+<div class="list-group col-md-10 col-md-offset-1 well">
+    <div class="list-group-item">
+        {% for chat in message_list %}
+        <h4 class="list-group-item-heading">{{chat.sender}}:{{chat.content}}</h4>
+        <p class="list-group-item-text">{{chat.time}}</p>
+        <input type="hidden" class="chat_id" value="{{chat.id}}"/>
+        <br>
+        {% endfor %}
+    </div>
+</div>
+
+<!--表单-->
+
+<h3> </h3>
+<form action="" method="post">
+    {% csrf_token %}
+                <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+    <table>
+    {{ message_form.as_table }}
+    </table>
+                    <input type="submit" value="Submit" />
+                </div></div></div>
+
+
+</form>
+<h3> </h3>
+
+{% endblock %}
+
+<!--{% block script %}-->
+<!--<script>-->
+ <!--$(function() {-->
+    <!--updateMsg();-->
+    <!--$("#chatForm").submit(function() {-->
+        <!--//ajax 提交表单-->
+        <!--$.post("./post/",-->
+            <!--$('#chatForm').serialize(),-->
+            <!--function(data) {-->
+            <!--$("#content").val("");-->
+        <!--});-->
+        <!--return false;-->
+    <!--});-->
+<!--});-->
+
+<!--//更新消息-->
+<!--function updateMsg() {-->
+    <!--$.post(-->
+        <!--"./post/",-->
+        <!--{-->
+        <!--post_type: "get_chat",-->
+        <!--last_chat_id: $(".chat_id").last().val()-->
+        <!--},-->
+        <!--function(data) {-->
+            <!--$('.list-group-item').append(data);    xml-->
+    <!--});-->
+    <!--setTimeout("updateMsg()", 1000);        //每秒更新一次-->
+<!--}-->
+<!--</script>-->
+{% endblock %}

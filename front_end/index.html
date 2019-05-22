@@ -1,0 +1,154 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+{% load staticfiles %}
+<h3></h3>
+
+<div id="advance-search1" class="main-page clearfix">
+    <div class="container">
+        <!--<button class="btn top-btn">Find Your Place</button>-->
+        <form action="{% url 'shareLife:search' %}" id="adv-search-form" class="clearfix">
+            <fieldset>
+                 {{search_form.location}}
+
+                <select name= "bedrooms" id="property-beds">
+                    <option value="">Bedrooms</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="any">Any</option>
+                </select>
+                <select name= "bathrooms" id="property-baths">
+                    <option value="">Bathrooms</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="any">Any</option>
+                </select>
+
+
+                </fieldset>
+                             {{search_form.startDate}}
+                 {{search_form.endDate}}
+                            <button type="submit" class="btn btn-default btn-lg text-center pull-right">Search </button>
+
+                <!--<input type="text" name="min-area" id="property-min-area" placeholder="Min Area (sqft)">-->
+
+                <!--<input type="text" name="max-area" id="property-max-area" placeholder="Max Area (sqft)">-->
+
+
+        </form>
+    </div>
+</div>
+
+{% if user.is_authenticated %}
+    <section id="user-posts">
+        <header class="section-header home-section-header text-center">
+        <div class="container">
+            <h2 class="wow slideInRight">{{user.get_username}}'s Posts!</h2>
+        </div>
+
+             <!--src="{% static 'assets/images/property/2.jpg' %}"-->
+        <div class="container">
+            <div class="row">
+            {% for post in user_list %}
+                <div class="col-lg-4 col-md-6 - layout-item-wrap">
+                    <article class="property clearfix">
+                        <figure class="feature-image">
+                            <a class="clearfix" href="post/{{ post.pk }}"> <img src = {{post.pic_url}}
+                                                                                  alt="Property Image"></a>
+                        </figure>
+                        <div class="property-contents">
+                            <header class="property-header clearfix">
+                                <div class="pull-left">
+                                    <h6 class="entry-title"><a href="post/{{ post.pk }}">{{ post.name }}</a>
+                                    </h6>
+                                    <span class="property-location"><i class="fa fa-map-marker"></i> {{post.location}}</span>
+                                </div>
+                                <div>
+                                     <span><i class="fa fa-pencil-square-o"></i> <a href="/post/{{ post.pk }}/update/">Edit Post</a></span>
+
+                                     <span><i class="fa fa-eraser"></i> <a href="/post/{{ post.pk }}/delete/">Delete Post</a></span>
+                                    </div>
+
+                            </header>
+                            <div class="property-meta clearfix">
+                        {% if post.sqft > 0%}
+                                <span><i class="fa fa-arrows-alt"></i>  SqFt</span>
+                                {%endif%}
+                                <span><i class="fa fa-bed"></i>d {{post.bedrooms}} Beds</span>
+                                <span><i class="fa fa-bathtub"></i> {{post.bathrooms}} Baths</span>
+
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                {% empty %}
+                <h3>no post yet！</h3>
+                {% endfor %}
+            </div>
+        </div>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+  <a class="btn btn-primary btn-lg header-btn hidden-sm" href="form" >More Post</a>
+       </div>
+</div>
+</div>
+
+    </header>
+
+</section>
+{% else %}
+{% endif %}
+
+
+<section id="home-property-for-rent-listing">
+    <header class="section-header home-section-header text-center">
+        <div class="container">
+            <h2 class="wow slideInLeft">Places To Explore</h2>
+        </div>
+    </header>
+    <div class="container">
+        <div class="row">
+            <div id="property-for-rent-slider">
+                {% for post in post_list %}
+                <div class="col-lg-4 col-md-6 - {{ post.pk }}">
+                    <article class="property">
+                        <figure class="feature-image" >
+                            <a  href="post/{{post.pk}}"> <img style="height:250px;" src = {{post.pic_url}} alt="Property Image"></a>
+                        </figure>
+                        <div class="property-contents">
+                            <header class="property-header clearfix">
+                                <div class="pull-left" >
+                                    <h6 class="entry-title" style="height:20px;"><a href="single-property.html">{{ post.name }}</a>
+                                    </h6>
+                                    <span class="property-location"><i class="fa fa-map-marker"></i> {{post.location}}</span>
+                                </div>
+                                <button class="btn btn-default btn-price pull-right btn-3d" >
+                                    <strong>{{post.author}}</strong></button>
+                            </header>
+                            <div class="property-meta clearfix">
+                        {% if post.sqft > 0%}
+                                <span><i class="fa fa-arrows-alt"></i>  SqFt</span>
+                                {%endif%}
+                                <span><i class="fa fa-bed"></i>d {{post.bedrooms}} Beds</span>
+                                <span><i class="fa fa-bathtub"></i> {{post.bathrooms}} Baths</span>
+
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                {% empty %}
+                <h3>no post yet！</h3>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

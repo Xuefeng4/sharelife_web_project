@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+<h5> </h5>
+{% block content %}
+<!--聊天框-->
+<div class="list-group col-md-10 col-md-offset-1 well">
+    <div class="list-group-item">
+        {% for chat in chats %}
+        <h4 class="list-group-item-heading">{{chat.sender}}:{{chat.content}}</h4>
+        <p class="list-group-item-text">{{chat.time}}</p>
+        <input type="hidden" class="chat_id" value="{{chat.id}}"/>
+        <br>
+        {% endfor %}
+    </div>
+</div>
+
+{% if user.is_authenticated %}
+
+<div class = 'container'>
+    <div class = 'col-md-10'> <label aria-label="true">Message</label>
+    </div>
+
+     <div class = 'col-md-10'>
+<form action="{% url 'message:chat_message' post.pk user1 user2 %}" method="post" class="comment-form">
+  {% csrf_token %}
+  <div class="list-group col-md-10 ">
+        <!--<label >Message：</label>-->
+        {{ message_form.content }}
+        {{ message_form.content.errors }}
+        <button type="submit" class="comment-btn">submit</button>
+    </div>
+    <!-- row -->
+</form>
+     </div>
+</div>
+{% else %}
+{% endif %}
+
+
+
+
+{% endblock %}
