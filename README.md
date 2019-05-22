@@ -11,17 +11,11 @@ Our data include two parts mainly, the first part is basic user information incl
 To make sure our data is accurate and reliable. We have create a python crawling program using request and lxml package to collect data from some well-known home sharing website such as Airbnb and Homestay, and parse the html file with XQuery and extract the data we need. As a result, 700 real data in-total around 7 major US cities including NYC, LA, Chicago, etc., are collected to empower our project. Then 667 valid data are imported into our database after cleaning and processing to ensure data validation.
 
 
-
-6.  Clearly list the functionality of your application (feature specs)
-
-1) Our application allows users to login, for personal post management and recommendations.
-
-2) Our application can insert/delete/update house post in our database.
-
-3) Our application can search the items in the database, including posts that meets only partial requirement
-
+The functionality of your application (feature specs)
+1) Allows users to login, for personal post management and recommendations.
+2) Insert/delete/update house post in our database.
+3) Search the items in the database, including posts that meets only partial requirement
 4) Our application allows user to leave comments under a post.
-
 5) Our application allows user to chat with another user.
 
 
