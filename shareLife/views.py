@@ -78,11 +78,10 @@ def detail(request, pk):
     #                               ])
     # 记得在顶部导入 CommentForm
     form = MessageForm()
-    # 获取这篇 post 下的全部评论
+ 
     message_list = Message.objects.all().filter(post =pk)
     amenity_text = post.get_amenity()
     print(type(amenity_text))
-    # 将文章、表单、以及文章下的评论列表作为模板变量传给 detail.html 模板，以便渲染相应数据。
     context = {'post':post,'message_form': form,'message_list': message_list,'amen_list':amenity_text}
     return render(request, 'detail.html', context=context)
 
@@ -161,11 +160,9 @@ def search(request):
             post_listSum4 = paginator.page(page)
             consParams = paginatorN.page(page)
         except PageNotAnInteger:
-            # 如果请求的页数不是整数，返回第一页。
             post_listSum4 = paginator.page(1)
             consParams = paginatorN.page(1)
         except EmptyPage:
-            # 如果请求的页数不在合法的页数范围内，返回结果的最后一页。
             post_listSum4 = paginator.page(paginator.num_pages)
             consParams = paginatorN.page(paginatorN.num_pages)
 
